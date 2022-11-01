@@ -1,18 +1,71 @@
-from math import sqrt
+class Sword:
+
+    def __init__(self, name, blade_length, grip, material='сталь'):
+        self.name = name
+        self.blade_length = blade_length
+        self.material = material
+        self.grip = grip
+        self.strength = 10
+        print(f'Новый меч {name} выкован!')
+    
+    def slashing_blow(self):
+        self.strength -= 10
+        return (f'Нанесён рубящий удар мечом {self.name}. '
+                f'Радиус поражения: {self.blade_length}.')
+
+    def piercing_strike(self):
+        self.strength -= 5
+        return (f'Нанесён пронзающий удар мечом {self.name}. '
+                f'Рукоять {self.grip} мягко легла в руку.')
+
+    def sharpen(self):
+        self.strength = 100
+        return (f'Меч "{self.name}" заточен,'
+                f' {self.material} отлично поддалась обработке.')
+    
+    # Вот он — новый метод! Именно в нём описывается то, что должно выводиться
+    # при печати объекта.
+    def __str__(self):
+        # Можно задать любую строку, например
+        # «Не печатай меня, ведь я — объект!».
+        # Но лучше пусть при печати выводится что-то осмысленное,
+        # например имя объекта и его основные параметры.
+        return (
+            f'Меч — «{self.name}». ' 
+            f'Выкован из материала {self.material}, '
+            f'длина клинка — {self.blade_length}, '
+            f'прочность — {self.strength}.'
+        )
 
 
-def calculatesquareroot(number):
-    """ Вычисляет квадратный корень"""
-    return sqrt(number)
+katana = Sword('Верный', 1.5,
+               'хват двумя руками')
+classic_sword = Sword('Дежурный', 1.2,
+                      'хват одной рукой')
 
+# Печатаем созданные объекты.
+print(katana)
+print(classic_sword)
 
-def calc(your_number):
-    if your_number <= 0:
-        return
-    print(f'Мы вычислили квадратный корень из введённого вами числа. '
-          f'Это будет: {calculatesquareroot(your_number)}')
+class Axe(MeleeWeapon):
 
+    def __init__(self, name, material):
+        super().__init__(name)
+        self.material = material
+   
+    # Объявляем собственный для класса Axe метод.
+    def slashing_blow(self):
+        # Описываем логику работы метода дочернего класса.
+        print('СОКРУШИТЕЛЬНЫЙ УДАР!')
+        # Возвращаем результат выполнения метода slashing_blow() в родительском классе.
+        return super().slashing_blow()  
 
-print('Добро пожаловать в самую лучшую программу для вычисления '
-      'квадратного корня из заданного числа')
-calc(25.5)
+brodex = Axe('Верный', 'железо')
+
+print(brodex.slashing_blow())
+
+...
+
+# Вывод в терминал:
+# СОКРУШИТЕЛЬНЫЙ УДАР!
+# Нанесён рубящий удар оружием Верный.
